@@ -6,7 +6,16 @@ class Bookstore:
     def add_book(self, title, author, isbn):
         book = Book(title, author, isbn)
         self.books.append(book)
-
+    
     def list_books(self):
         for i, book in enumerate(self.books):
             print(f"{i+1}. Title: {book.title}, Author: {book.author}, ISBN: {book.isbn}")
+            
+    def existBook(self, id):
+        return 1 <= id <= len(self.books)
+    
+    def modifyBook(self, id, title):
+        self.books[id-1].title=title
+        
+    def deleteBook(self,id):
+        del self.books[id-1]
