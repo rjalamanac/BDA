@@ -1,6 +1,7 @@
 from Models.BookStore import Bookstore
 def main():
     bookstore = Bookstore()
+    bookstore.loadDataBooksFromJson()
     while True:
         print("\nBookstore Console")
         print("1. Add a book")
