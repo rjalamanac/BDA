@@ -12,7 +12,9 @@ def read_json_file(filename):
             data = json.load(file)
             return data
     except FileNotFoundError:
-        return None
+        return []
+    except json.JSONDecodeError:
+        return []
 
 # Function to modify an existing JSON file
 def modify_json_file(filename, new_data):
@@ -32,26 +34,3 @@ def delete_json_file(filename):
         print(f'File {filename} deleted.')
     except FileNotFoundError:
         print(f'File {filename} does not exist.')
-
-# Create a new JSON file
-data_to_create = {
-    'name': 'John Doe',
-    'age': 30,
-    'city': 'New York'
-}
-create_json_file('data.json', data_to_create)
-
-# Read and display the data from the JSON file
-read_data = read_json_file('data.json')
-print('Data from the file: ')
-print(read_data)
-
-# Modify the JSON file
-data_to_modify = {'age': 31, 'country': 'USA'}
-modify_json_file('data.json', data_to_modify)
-read_data = read_json_file('data.json')
-print('Modified data: ')
-print(read_data)
-
-# Delete the JSON file
-delete_json_file('data.json')

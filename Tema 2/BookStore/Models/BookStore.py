@@ -1,7 +1,6 @@
 from Models.Book import Book
 from Utils.Constants import FILENAME
 from Utils.JsonHelper import *
-import json
 import os
 
 class Bookstore:
@@ -9,13 +8,14 @@ class Bookstore:
         self.books = []
         
     def dumpDataBooksToJson(self):
-         create_json_file(FILENAME,self.books)
+         booksDictionary= [person.to_dict() for person in self.books]
+         create_json_file(FILENAME,booksDictionary)
 
          
     def loadDataBooksFromJson(self):
         if os.path.exists(FILENAME):
             data=read_json_file(FILENAME)
-            self.books =data
+            self.books =[Book.from_dict(x) for x in data]
 
 
     def add_book(self, title, author, isbn):
