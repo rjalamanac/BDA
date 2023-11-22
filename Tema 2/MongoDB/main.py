@@ -3,7 +3,7 @@ from model.person import Person
 from model.newPerson import NewPerson
 from data.mongo_operations import MongoDBOperations
 
-mongo_operations = MongoDBOperations('person', 'people','27017')
+mongo_operations = MongoDBOperations('person', 'people','8888')
 
 personJohn = NewPerson(name='John Doe', age=30, email='john@example.com')
 personJane = NewPerson(name='Jane Doe', age=25, email='jane@example.com')

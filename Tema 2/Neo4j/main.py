@@ -9,7 +9,7 @@ def main():
     neo4j_crud = Neo4jCRUD(uri, user, password)
 
     # Example: Create a node
-    node_properties = {"name": "Node 1", "type": "Example"}
+    node_properties = {"name": "Node 1", "type": "Example", "cantidad":12}
     created_node = neo4j_crud.create_node("ExampleNode", node_properties)
     print(f"Created Node: {created_node}")
 

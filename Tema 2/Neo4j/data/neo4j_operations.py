@@ -29,6 +29,21 @@ class Neo4jCRUD:
         result = tx.run(query, props=properties)
         return result.single()[0]
 
+    def create_relationship(self,labelOrigin,labelEnd,relationshipName):
+         with self._driver.session() as session:
+            result = session.write_transaction(self._create_relationship, labelOrigin,labelEnd,relationshipName)
+            return result
+        
+    @staticmethod
+    def _create_relationship(tx, labelOrigin,propertyOrigin, labelEnd,propertyEnd,relationshipName):
+        query = (
+            f"MATCH (n:{labelOrigin}),(c:{labelEnd}) "
+            f"WHERE n.{propertyOrigin} = c.{propertyEnd}" 
+            f"CREATE (n)-[:{relationshipName}]->(c)"
+        )
+        result = tx.run(query)
+        return result
+    
     def read_nodes(self, label):
         with self._driver.session() as session:
             result = session.read_transaction(self._read_nodes, label)
@@ -37,7 +52,7 @@ class Neo4jCRUD:
     @staticmethod
     def _read_nodes(tx, label):
         query = (
-            f"MATCH (n:{label}) "
+            f"MATCH (n:{label}) " 
             "RETURN n"
         )
         result = tx.run(query)
