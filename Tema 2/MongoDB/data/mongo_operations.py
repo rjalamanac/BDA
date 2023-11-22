@@ -28,3 +28,7 @@ class MongoDBOperations:
     def delete_person(self, filter_criteria):
         result = self.collection.delete_many(filter_criteria)
         return result.deleted_count
+    
+    def run_aggregation(self, pipeline):
+        result = self.collection.aggregate(pipeline)
+        return list(result)

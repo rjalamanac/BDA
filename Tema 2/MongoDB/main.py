@@ -33,3 +33,13 @@ print(f"Deleted {deleted_count} person(s).")
 # Read remaining persons from the MongoDB collection
 remaining_persons = mongo_operations.read_person({})
 print("Remaining persons:", remaining_persons)
+
+# Example aggregation pipeline
+pipeline = [
+    {"$group": {"_id": "$department", "averageAge": {"$avg": "$age"}}},
+    {"$sort": {"averageAge": -1}}
+]
+
+# Run the aggregation pipeline
+result = mongo_operations.run_aggregation(pipeline)
+print("Aggregation result:", result)
