@@ -48,3 +48,4 @@ for row in after_deletion_data:
     print(row)
 
 db.close_connection()
+
