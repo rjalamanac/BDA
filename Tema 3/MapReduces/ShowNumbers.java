@@ -17,34 +17,36 @@ public static boolean isNumeric(String str) {
 }
 
 
-public static class Map extends Mapper<LongWritable, Text, Text, IntWritable> {
-		private final static IntWritable one = new IntWritable(1);
+public static class Map extends Mapper<LongWritable, Text, Text, Text> {
 		private Text word = new Text();
-
 		@Override
 		public void map(LongWritable key, Text value, Context context)
 				throws IOException, InterruptedException {
 			String line = value.toString();
-      String [] chars = line.split("");
-      for(String str:chars){
-        word.set(str);
+			StringTokenizer tokenizer = new StringTokenizer(line);
+			while (tokenizer.hasMoreTokens()) {
+				word.set(tokenizer.nextToken());
         if (isNumeric(word.toString()))
         {
-				  context.write(word, one);
+				  context.write(word, value);
         }
-      }
+			}
 		}
     }
 
-    public static class Reduce extends Reducer<Text, IntWritable, Text, IntWritable> {
+    public static class Reduce extends Reducer<Text, Text, Text, Text> {
+    
+    private Text result = new Text();
+
 		@Override
-		public void reduce(Text key, Iterable<IntWritable> values, Context context)
+		public void reduce(Text key, Iterable<Text> values, Context context)
 				throws IOException, InterruptedException {
-			int sum = 0;
-			for (IntWritable val: values) {
-				sum += val.get();
+      String values_ = "";
+			for (Text val: values) {
+				values_ += val.toString();
 			}
-			context.write(key, new IntWritable(sum));
+			result.set(values_);
+      context.write(key, result);
 		}
 	}
     public static void main(String[] args) throws Exception {
@@ -59,7 +61,7 @@ public static class Map extends Mapper<LongWritable, Text, Text, IntWritable> {
 		job.setJobName("ShowNumbers");
 
 		job.setOutputKeyClass(Text.class);
-		job.setOutputValueClass(IntWritable.class);
+		job.setOutputValueClass(Text.class);
 
 		job.setMapperClass(Map.class);
 		job.setCombinerClass(Reduce.class);
