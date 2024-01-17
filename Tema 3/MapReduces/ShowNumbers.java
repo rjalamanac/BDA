@@ -43,7 +43,7 @@ public static class Map extends Mapper<LongWritable, Text, Text, Text> {
 				throws IOException, InterruptedException {
       String values_ = "";
 			for (Text val: values) {
-				values_ += val.toString();
+				values_ +=  val.toString();
 			}
 			result.set(values_);
       context.write(key, result);
