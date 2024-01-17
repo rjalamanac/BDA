@@ -25,14 +25,14 @@ public static class Map extends Mapper<LongWritable, Text, Text, IntWritable> {
 		public void map(LongWritable key, Text value, Context context)
 				throws IOException, InterruptedException {
 			String line = value.toString();
-			StringTokenizer tokenizer = new StringTokenizer(line);
-			while (tokenizer.hasMoreTokens()) {
-				word.set(tokenizer.nextToken());
-        if (isNumeric(word[0].toString()))
+      String [] chars = line.split("");
+      for(String str:chars){
+        word.set(str);
+        if (isNumeric(word.toString()))
         {
 				  context.write(word, one);
         }
-			}
+      }
 		}
     }
 
