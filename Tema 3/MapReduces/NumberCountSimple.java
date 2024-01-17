@@ -1,6 +1,5 @@
 import java.io.IOException;
 import java.util.*;
-
 import org.apache.hadoop.mapreduce.*;
 import org.apache.hadoop.mapreduce.lib.input.*;
 import org.apache.hadoop.mapreduce.lib.output.*;
@@ -9,11 +8,18 @@ import org.apache.hadoop.io.*;
 import org.apache.hadoop.util.*;
 import org.apache.hadoop.fs.*;
 
+public class NumberCountSimple {
 
-public class WordCountSimple {
+	public static boolean isNumeric(String value) {
+		try {
+			Integer.parseInt(value);
+			return true;
+		} catch (NumberFormatException ex) {
+		}
+		return false;
+	}
 
-public static class Map extends Mapper<LongWritable, Text, Text, IntWritable> {
-		private final static IntWritable one = new IntWritable(1);
+	public static class Map extends Mapper<LongWritable, Text, Text, Text> {
 		private Text word = new Text();
 
 		@Override
@@ -23,34 +29,41 @@ public static class Map extends Mapper<LongWritable, Text, Text, IntWritable> {
 			StringTokenizer tokenizer = new StringTokenizer(line);
 			while (tokenizer.hasMoreTokens()) {
 				word.set(tokenizer.nextToken());
-				context.write(word, one);
+				if (isNumeric(word.toString())) {
+					context.write(word, value);
+				}
 			}
-		}
-
-        public static class Reduce extends Reducer<Text, IntWritable, Text, IntWritable> {
-		@Override
-		public void reduce(Text key, Iterable<IntWritable> values, Context context)
-				throws IOException, InterruptedException {
-			int sum = 0;
-			for (IntWritable val: values) {
-				sum += val.get();
-			}
-			context.write(key, new IntWritable(sum));
 		}
 	}
-    public static void main(String[] args) throws Exception {
 
-        if (args.length < 2) {
-            System.out.println("WordCountSimple <nameFile> <outDir>");
-            ToolRunner.printGenericCommandUsage(System.out);
-            return 2;
-        }
+	public static class Reduce extends Reducer<Text, Text, Text, Text> {
+		private Text word = new Text();
+
+		@Override
+		public void reduce(Text key, Iterable<Text> values, Context context)
+				throws IOException, InterruptedException {
+			String data = "";
+			for (Text val : values) {
+				data += val.toString() + "\r\n";
+			}
+			word.set(data);
+			context.write(key, word);
+		}
+	}
+
+	public static void main(String[] args) throws Exception {
+
+		if (args.length < 2) {
+			System.out.println("NumberCountSimple <nameFile> <outDir>");
+			ToolRunner.printGenericCommandUsage(System.out);
+			return;
+		}
 		Job job = Job.getInstance();
-		job.setJarByClass(WordCountSimple.class);
-		job.setJobName("WordCountSimple");
+		job.setJarByClass(NumberCountSimple.class);
+		job.setJobName("NumberCountSimple");
 
 		job.setOutputKeyClass(Text.class);
-		job.setOutputValueClass(IntWritable.class);
+		job.setOutputValueClass(Text.class);
 
 		job.setMapperClass(Map.class);
 		job.setCombinerClass(Reduce.class);
@@ -62,7 +75,6 @@ public static class Map extends Mapper<LongWritable, Text, Text, IntWritable> {
 		FileInputFormat.addInputPath(job, new Path(args[0]));
 		FileOutputFormat.setOutputPath(job, new Path(args[1]));
 
-		System.exit(job.waitForCompletion(true)? 0 : 1);
+		System.exit(job.waitForCompletion(true) ? 0 : 1);
 	}
-}
 }
