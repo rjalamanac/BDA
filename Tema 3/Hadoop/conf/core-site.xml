@@ -902,7 +902,7 @@
 
 <property>
   <name>fs.defaultFS</name>
-  <value>hdfs://localhost:9000</value>
+  <value>hdfs://namenode:8020</value>
   <description>The name of the default file system.  A URI whose
   scheme and authority determine the FileSystem implementation.  The
   uri's scheme determines the config property (fs.SCHEME.impl) naming
@@ -910,12 +910,6 @@
   determine the host, port, etc. for a filesystem.</description>
 </property>
 
-<property>
-  <name>fs.default.name</name>
-  <value>file:///</value>
-  <description>Deprecated. Use (fs.defaultFS) property
-  instead</description>
-</property>
 
 <property>
   <name>fs.trash.interval</name>
