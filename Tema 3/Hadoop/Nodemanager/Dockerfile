@@ -7,4 +7,4 @@ ADD run.sh /run.sh
 
 EXPOSE 8042
 
-CMD ["/run.sh"]
+CMD ["./run.sh"]

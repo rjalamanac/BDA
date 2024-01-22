@@ -1,15 +1,15 @@
-FROM python:3.7
+FROM python:3.10-bullseye
 
 USER root
 
 # --------------------------------------------------------
 # JAVA
 # --------------------------------------------------------
-RUN apt-get update && apt-get install -y --no-install-recommends \
-    openjdk-11-jdk
+RUN apt-get update 
+RUN apt-get install -y --no-install-recommends openjdk-11-jdk
 # For AMD based architecture use
 # ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk/
-ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-arm64/
+ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/
 
 # --------------------------------------------------------
 # HADOOP
