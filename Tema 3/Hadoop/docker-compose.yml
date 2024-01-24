@@ -17,6 +17,8 @@ services:
       - "8020:8020"
     networks:
       - hadoop_network
+    storage_opt:
+      size: '200m'
 
   resourcemanager:
     build: ./resourcemanager
@@ -32,6 +34,8 @@ services:
       - "8089:8088"
     networks:
       - hadoop_network
+    storage_opt:
+      size: '200m'
 
   historyserver:
     build: ./historyserver
@@ -48,6 +52,8 @@ services:
       - "8188:8188"
     networks:
       - hadoop_network
+    storage_opt:
+      size: '200m'
 
   nodemanager1:
     build: ./nodemanager
@@ -62,6 +68,8 @@ services:
       - "8042:8042"
     networks:
       - hadoop_network
+    storage_opt:
+      size: '200m'
 
   datanode1:
     build: ./datanode
@@ -74,6 +82,8 @@ services:
       - hadoop_datanode1:/hadoop/dfs/data
     networks:
       - hadoop_network
+    storage_opt:
+      size: '200m'
 
   datanode2:
     build: ./datanode
@@ -86,6 +96,9 @@ services:
       - hadoop_datanode2:/hadoop/dfs/data
     networks:
       - hadoop_network
+    storage_opt:
+      size: '200m'
+
 volumes:
   tmpfs:
     driver: local
