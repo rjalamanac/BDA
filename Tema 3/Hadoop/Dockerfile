@@ -51,7 +51,7 @@ RUN wget http://archive.apache.org/dist/sqoop/1.4.7/sqoop-1.4.7.bin__hadoop-2.6.
 
 RUN wget https://dlcdn.apache.org//commons/lang/binaries/commons-lang-2.6-bin.tar.gz \
 && tar -xf commons-lang-2.6-bin.tar.gz \
-&& cp /content/commons-lang-2.6/commons-lang-2.6.jar /usr/local/sqoop/lib
+&& cp commons-lang-2.6/commons-lang-2.6.jar /usr/local/sqoop/lib
 
 
 USER root
