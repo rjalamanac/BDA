@@ -24,6 +24,18 @@ ENV HADOOP_HOME=/opt/hadoop-$HADOOP_VERSION
 ENV PATH $HADOOP_PREFIX/bin/:$PATH
 ENV PATH $HADOOP_HOME/bin/:$PATH
 
+ENV HADOOP_COMMON_HOME=/opt/hadoop-$HADOOP_VERSION
+ENV HADOOP_MAPRED_HOME=/opt/hadoop-$HADOOP_VERSION
+ENV SQOOP_HOME=/usr/local/sqoop
+ENV PATH /usr/local/sqoop/bin/:$PATH
+ENV HADOOP_COMMON_LIB_NATIVE_DIR=/opt/hadoop-$HADOOP_VERSION/lib/native
+ENV CLASSPATH=/tmp
+ENV HBASE_HOME=/opt/hadoop-$HADOOP_VERSION
+ENV HCAT_HOME=/opt/hadoop-$HADOOP_VERSION
+ENV ACCUMULO_HOME=/opt/hadoop-$HADOOP_VERSION
+ENV ZOOKEEPER_HOME=/opt/hadoop-$HADOOP_VERSION
+
+
 RUN set -x \
     && curl -fSL "$HADOOP_URL" -o /tmp/hadoop.tar.gz \
     && tar -xvf /tmp/hadoop.tar.gz -C /opt/ \
@@ -32,6 +44,15 @@ RUN set -x \
 RUN ln -s /opt/hadoop-$HADOOP_VERSION/etc/hadoop /etc/hadoop
 RUN mkdir /opt/hadoop-$HADOOP_VERSION/logs
 RUN mkdir /hadoop-data
+
+RUN wget http://archive.apache.org/dist/sqoop/1.4.7/sqoop-1.4.7.bin__hadoop-2.6.0.tar.gz \
+&&  tar -xf sqoop-1.4.7.bin__hadoop-2.6.0.tar.gz \
+&&  mv sqoop-1.4.7.bin__hadoop-2.6.0 /usr/local/sqoop
+
+RUN wget https://dlcdn.apache.org//commons/lang/binaries/commons-lang-2.6-bin.tar.gz \
+&& tar -xf commons-lang-2.6-bin.tar.gz \
+&& cp /content/commons-lang-2.6/commons-lang-2.6.jar /usr/local/sqoop/lib
+
 
 USER root
 

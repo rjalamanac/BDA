@@ -29,7 +29,7 @@
 
         <name>yarn.app.mapreduce.am.resource.mb</name>
 
-        <value>1000</value>
+        <value>1228</value>
 
     </property>
      <property>
@@ -87,7 +87,7 @@
 
         <name>mapreduce.map.memory.mb</name>
 
-        <value>1000</value>
+        <value>1228</value>
 
         <description>Larger resource limit for maps.</description>
 
@@ -96,7 +96,7 @@
 
         <name>mapreduce.reduce.memory.mb</name>
 
-        <value>1000</value>
+        <value>1228</value>
 
         <description>Larger resource limit for reduce.</description>
     </property>

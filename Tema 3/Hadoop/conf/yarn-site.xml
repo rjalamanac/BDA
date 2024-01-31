@@ -47,7 +47,7 @@
 
         <name>yarn.scheduler.minimum-allocation-mb</name>
 
-        <value>300</value>
+        <value>1228</value>
 
         <description>Minimum limit of memory to allocate to each container request at the Resource Manager.</description>
 
@@ -57,7 +57,7 @@
 
         <name>yarn.scheduler.maximum-allocation-mb</name>
 
-        <value>1000</value>
+        <value>9830</value>
 
         <description>Maximum limit of memory to allocate to each container request at the Resource Manager.</description>
 
@@ -87,7 +87,7 @@
 
         <name>yarn.nodemanager.resource.memory-mb</name>
 
-        <value>1000</value>
+        <value>9830</value>
 
         <description>Physical memory, in MB, to be made available to running containers</description>
 
