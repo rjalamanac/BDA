@@ -53,6 +53,12 @@ RUN wget https://dlcdn.apache.org//commons/lang/binaries/commons-lang-2.6-bin.ta
 && tar -xf commons-lang-2.6-bin.tar.gz \
 && cp commons-lang-2.6/commons-lang-2.6.jar /usr/local/sqoop/lib
 
+RUN wget http://ftp.ntu.edu.tw/MySQL/Downloads/Connector-J/mysql-connector-java-5.1.49.tar.gz \
+&& tar -zxf mysql-connector-java-5.1.49.tar.gz \
+&& cd mysql-connector-java-5.1.49 \
+&& mv mysql-connector-java-5.1.49-bin.jar /usr/local/sqoop/lib 
+
+
 
 USER root
 
