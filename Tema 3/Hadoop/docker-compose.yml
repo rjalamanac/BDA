@@ -2,7 +2,7 @@ version: "2.1"
 
 services:
   namenode:
-    build: ./namenode
+    build: ./Namenode
     container_name: namenode
     volumes:
       - hadoop_namenode:/hadoop/dfs/name
@@ -17,7 +17,7 @@ services:
       - hadoop_network
 
   resourcemanager:
-    build: ./resourcemanager
+    build: ./Resourcemanager
     container_name: resourcemanager
     restart: on-failure
     depends_on:
@@ -30,7 +30,7 @@ services:
       - hadoop_network
 
   nodemanager1:
-    build: ./nodemanager
+    build: ./Nodemanager
     container_name: nodemanager1
     depends_on:
       - namenode
@@ -42,7 +42,7 @@ services:
       - hadoop_network
 
   nodemanager2:
-    build: ./nodemanager
+    build: ./Nodemanager
     container_name: nodemanager2
     depends_on:
       - namenode
@@ -54,7 +54,7 @@ services:
       - hadoop_network
 
   datanode1:
-    build: ./datanode
+    build: ./Datanode
     container_name: datanode1
     depends_on:
       - namenode
@@ -64,7 +64,7 @@ services:
       - hadoop_network
 
   datanode2:
-    build: ./datanode
+    build: ./Datanode
     container_name: datanode2
     depends_on:
       - namenode
