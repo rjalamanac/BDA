@@ -29,21 +29,6 @@ services:
     networks:
       - hadoop_network
 
-  historyserver:
-    build: ./historyserver
-    container_name: historyserver
-    depends_on:
-      - namenode
-      - datanode1
-      - datanode2
-    volumes:
-      - hadoop_historyserver:/hadoop/yarn/timeline
-    ports:
-      - "8188:8188"
-    networks:
-      - hadoop_network
-
-
   nodemanager1:
     build: ./nodemanager
     container_name: nodemanager1
@@ -53,6 +38,18 @@ services:
       - datanode2
     ports:
       - "8042:8042"
+    networks:
+      - hadoop_network
+
+  nodemanager2:
+    build: ./nodemanager
+    container_name: nodemanager2
+    depends_on:
+      - namenode
+      - datanode1
+      - datanode2
+    ports:
+      - "8043:8042"
     networks:
       - hadoop_network
 
@@ -80,7 +77,6 @@ volumes:
   hadoop_namenode:
   hadoop_datanode1:
   hadoop_datanode2:
-  hadoop_historyserver:
 
 
 networks:
