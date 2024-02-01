@@ -37,7 +37,7 @@ ENV ZOOKEEPER_HOME=/opt/hadoop-$HADOOP_VERSION
 
 ENV FLUME_HOME=/usr/local/flume/apache-flume-1.11.0-bin
 ENV PATH /usr/local/flume/apache-flume-1.11.0-bin/bin/:$PATH
-ENV JAVA_OPTS=-Xms400m -Xmx400m -Dcom.sun.management.jmxremote
+ENV JAVA_OPTS="-Xms400m -Xmx400m -Dcom.sun.management.jmxremote"
 
 
 
