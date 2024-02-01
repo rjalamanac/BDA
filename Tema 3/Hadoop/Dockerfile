@@ -35,6 +35,11 @@ ENV HCAT_HOME=/opt/hadoop-$HADOOP_VERSION
 ENV ACCUMULO_HOME=/opt/hadoop-$HADOOP_VERSION
 ENV ZOOKEEPER_HOME=/opt/hadoop-$HADOOP_VERSION
 
+ENV FLUME_HOME=/usr/local/flume/apache-flume-1.11.0-bin
+ENV PATH /usr/local/flume/apache-flume-1.11.0-bin/bin/:$PATH
+ENV JAVA_OPTS=-Xms400m -Xmx400m -Dcom.sun.management.jmxremote
+
+
 
 RUN set -x \
     && curl -fSL "$HADOOP_URL" -o /tmp/hadoop.tar.gz \
@@ -58,6 +63,9 @@ RUN wget http://ftp.ntu.edu.tw/MySQL/Downloads/Connector-J/mysql-connector-java-
 && cd mysql-connector-java-5.1.49 \
 && mv mysql-connector-java-5.1.49-bin.jar /usr/local/sqoop/lib 
 
+RUN wget https://dlcdn.apache.org/flume/1.11.0/apache-flume-1.11.0-bin.tar.gz \
+&& tar xzf apache-flume-1.11.0-bin.tar.gz \
+&& mv apache-flume-1.11.0-bin/ /usr/local/flume
 
 
 USER root
