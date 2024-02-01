@@ -2,8 +2,6 @@ version: "2.1"
 
 services:
   namenode:
-    mem_limit: 300m
-    mem_reservation: 100m
     build: ./namenode
     container_name: namenode
     volumes:
@@ -17,13 +15,9 @@ services:
       - "8020:8020"
     networks:
       - hadoop_network
-    storage_opt:
-      size: '200m'
 
   resourcemanager:
     build: ./resourcemanager
-    mem_limit: 300m
-    mem_reservation: 100m
     container_name: resourcemanager
     restart: on-failure
     depends_on:
@@ -34,13 +28,9 @@ services:
       - "8089:8088"
     networks:
       - hadoop_network
-    storage_opt:
-      size: '200m'
 
   historyserver:
     build: ./historyserver
-    mem_limit: 300m
-    mem_reservation: 100m
     container_name: historyserver
     depends_on:
       - namenode
@@ -52,13 +42,10 @@ services:
       - "8188:8188"
     networks:
       - hadoop_network
-    storage_opt:
-      size: '200m'
+
 
   nodemanager1:
     build: ./nodemanager
-    mem_limit: 300m
-    mem_reservation: 100m
     container_name: nodemanager1
     depends_on:
       - namenode
@@ -68,13 +55,9 @@ services:
       - "8042:8042"
     networks:
       - hadoop_network
-    storage_opt:
-      size: '200m'
 
   datanode1:
     build: ./datanode
-    mem_limit: 300m
-    mem_reservation: 100m
     container_name: datanode1
     depends_on:
       - namenode
@@ -82,13 +65,9 @@ services:
       - hadoop_datanode1:/hadoop/dfs/data
     networks:
       - hadoop_network
-    storage_opt:
-      size: '200m'
 
   datanode2:
     build: ./datanode
-    mem_limit: 300m
-    mem_reservation: 100m
     container_name: datanode2
     depends_on:
       - namenode
@@ -96,16 +75,8 @@ services:
       - hadoop_datanode2:/hadoop/dfs/data
     networks:
       - hadoop_network
-    storage_opt:
-      size: '200m'
 
 volumes:
-  tmpfs:
-    driver: local
-    driver_opts:
-      o: "size=100m,uid=1000"
-      device: tmpfs
-      type: tmpfs
   hadoop_namenode:
   hadoop_datanode1:
   hadoop_datanode2:
