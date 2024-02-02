@@ -65,7 +65,7 @@ RUN wget http://ftp.ntu.edu.tw/MySQL/Downloads/Connector-J/mysql-connector-java-
 
 RUN wget https://dlcdn.apache.org/flume/1.11.0/apache-flume-1.11.0-bin.tar.gz \
 && tar xzf apache-flume-1.11.0-bin.tar.gz \
-&& mv apache-flume-1.11.0-bin/ /usr/local/flume
+&& mv apache-flume-1.11.0-bin /usr/local/flume
 
 
 USER root
