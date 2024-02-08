@@ -59,7 +59,6 @@ services:
 
   datanode1:
     build: ./Datanode
-    hostname: datanode1
     hostname: 10.2.14.251
     depends_on:
       - namenode
