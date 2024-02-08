@@ -26,7 +26,10 @@
         <name>dfs.datanode.data.dir</name>
         <value>/tmp/hadoop/dfs/data</value>
     </property>
-    
+    <property>
+        <name>dfs.webhdfs.enabled</name>
+        <value>true</value>
+    </property>
     <property>
         <name>dfs.namenode.name.dir</name>
         <value>/tmp/hadoop/dfs/name</value>
