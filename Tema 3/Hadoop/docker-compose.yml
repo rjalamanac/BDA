@@ -3,7 +3,7 @@ version: "3"
 services:
   namenode:
     build: ./Namenode
-    hostname: namenode
+    hostname: 10.2.14.251
     container_name: namenode
     volumes:
       - hadoop_namenode:/hadoop/dfs/name
@@ -33,7 +33,7 @@ services:
 
   nodemanager1:
     build: ./Nodemanager
-    hostname: nodemanager1
+    hostname: 10.2.14.251
     container_name: nodemanager1
     depends_on:
       - namenode
@@ -46,7 +46,7 @@ services:
 
   nodemanager2:
     build: ./Nodemanager
-    hostname: nodemanager2
+    hostname: 10.2.14.251
     container_name: nodemanager2
     depends_on:
       - namenode
@@ -60,9 +60,11 @@ services:
   datanode1:
     build: ./Datanode
     hostname: datanode1
-    container_name: datanode1
+    hostname: 10.2.14.251
     depends_on:
       - namenode
+    ports:
+      - "9864:9864"
     volumes:
       - hadoop_datanode1:/hadoop/dfs/data
     networks:
@@ -70,12 +72,14 @@ services:
 
   datanode2:
     build: ./Datanode
-    hostname: datanode2
+    hostname: 10.2.14.251
     container_name: datanode2
     depends_on:
       - namenode
     volumes:
       - hadoop_datanode2:/hadoop/dfs/data
+    ports:
+      - "9865:9864"
     networks:
       - hadoop_network
 
