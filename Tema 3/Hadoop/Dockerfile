@@ -40,8 +40,8 @@ ENV PATH /usr/local/apache-flume-1.11.0-bin/bin:$PATH
 ENV JAVA_OPTS="-Xms400m -Xmx400m -Dcom.sun.management.jmxremote"
 
 ENV PIG_HOME=/usr/local/pig-0.17.0
-ENV PATH /usr/local/pig-0.17.0:$PATH
-ENV PIG_CLASSPATH=/usr/local/hadoop-3.3.6/conf
+ENV PATH /usr/local/pig-0.17.0/bin:$PATH
+ENV PIG_CLASSPATH=$HADOOP_CONF_DIR
 
 RUN set -x \
     && curl -fSL "$HADOOP_URL" -o /tmp/hadoop.tar.gz \
