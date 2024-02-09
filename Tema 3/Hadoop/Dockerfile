@@ -35,11 +35,13 @@ ENV HCAT_HOME=/opt/hadoop-$HADOOP_VERSION
 ENV ACCUMULO_HOME=/opt/hadoop-$HADOOP_VERSION
 ENV ZOOKEEPER_HOME=/opt/hadoop-$HADOOP_VERSION
 
-ENV FLUME_HOME=/usr/local/flume/
-ENV PATH /usr/local/flume/bin/:$PATH
+ENV FLUME_HOME=/usr/local/apache-flume-1.11.0-bin
+ENV PATH /usr/local/apache-flume-1.11.0-bin/bin:$PATH
 ENV JAVA_OPTS="-Xms400m -Xmx400m -Dcom.sun.management.jmxremote"
 
-
+ENV PIG_HOME=/usr/local/pig-0.17.0
+ENV PATH /usr/local/pig-0.17.0:$PATH
+ENV PIG_CLASSPATH=/usr/local/hadoop-3.3.6/conf
 
 RUN set -x \
     && curl -fSL "$HADOOP_URL" -o /tmp/hadoop.tar.gz \
@@ -65,8 +67,11 @@ RUN wget http://ftp.ntu.edu.tw/MySQL/Downloads/Connector-J/mysql-connector-java-
 
 RUN wget https://dlcdn.apache.org/flume/1.11.0/apache-flume-1.11.0-bin.tar.gz \
 && tar xzf apache-flume-1.11.0-bin.tar.gz \
-&& mv apache-flume-1.11.0-bin /usr/local/flume
+&& mv apache-flume-1.11.0-bin/ /usr/local/
 
+RUN wget https://downloads.apache.org/pig/pig-0.17.0/pig-0.17.0.tar.gz \
+&& tar -xzf pig-0.17.0.tar.gz \
+&& cp -r pig-0.17.0/ /usr/local
 
 USER root
 
