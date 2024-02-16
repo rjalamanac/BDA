@@ -32,7 +32,7 @@ services:
 
   nodemanager1:
     build: ./Nodemanager
-    hostname: nodemanager1
+    hostname: 10.2.14.251
     container_name: nodemanager1
     depends_on:
       - namenode
