@@ -25,7 +25,6 @@ services:
     depends_on:
       - namenode
       - datanode1
-      - datanode2
     ports:
       - "8089:8088"
     networks:
@@ -38,24 +37,11 @@ services:
     depends_on:
       - namenode
       - datanode1
-      - datanode2
     ports:
       - "8042:8042"
     networks:
       - hadoop_network
 
-  nodemanager2:
-    build: ./Nodemanager
-    hostname: 10.2.14.251
-    container_name: nodemanager2
-    depends_on:
-      - namenode
-      - datanode1
-      - datanode2
-    ports:
-      - "8043:8042"
-    networks:
-      - hadoop_network
 
   datanode1:
     build: ./Datanode
@@ -69,23 +55,10 @@ services:
     networks:
       - hadoop_network
 
-  datanode2:
-    build: ./Datanode
-    hostname: 10.2.14.251
-    container_name: datanode2
-    depends_on:
-      - namenode
-    volumes:
-      - hadoop_datanode2:/hadoop/dfs/data
-    ports:
-      - "9865:9864"
-    networks:
-      - hadoop_network
 
 volumes:
   hadoop_namenode:
   hadoop_datanode1:
-  hadoop_datanode2:
 
 
 networks:
