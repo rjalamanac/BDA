@@ -9,7 +9,7 @@ import org.apache.hadoop.mapreduce.lib.output.*;
 import org.apache.hadoop.conf.*;
 import org.apache.hadoop.io.*;
 import org.apache.hadoop.util.*;
-import org.w3c.dom.Text;
+
 import org.apache.hadoop.fs.*;
 
 public class ShowDepartementsWithMoreOf200Import {

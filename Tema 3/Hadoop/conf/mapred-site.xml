@@ -19,18 +19,12 @@
 <configuration>
 
     <property>
-
         <name>mapreduce.framework.name</name>
-
         <value>yarn</value>
-
     </property>
   <property>
-
         <name>yarn.app.mapreduce.am.resource.mb</name>
-
-        <value>1228</value>
-
+        <value>4096</value>
     </property>
      <property>
         <name>yarn.app.mapreduce.am.env</name>
@@ -46,11 +40,8 @@
     </property>
 
     <property>
-
         <name>yarn.app.mapreduce.am.command-opts</name>
-
         <value>-Xmx8192m</value>
-
     </property>
 
     <property>
@@ -64,40 +55,25 @@
     </property>
 
     <property>
-
         <name>mapreduce.map.cpu.vcores</name>
-
-        <value>1</value>
-
+        <value>3</value>
         <description>The number of virtual cores required for each map task.</description>
-
     </property>
 
     <property>
-
         <name>mapreduce.reduce.cpu.vcores</name>
-
-        <value>1</value>
-
+        <value>3</value>
         <description>The number of virtual cores required for each map task.</description>
-
     </property>
 
     <property>
-
         <name>mapreduce.map.memory.mb</name>
-
-        <value>1228</value>
-
+        <value>4096</value>
         <description>Larger resource limit for maps.</description>
-
     </property>
     <property>
-
         <name>mapreduce.reduce.memory.mb</name>
-
-        <value>1228</value>
-
+        <value>4096</value>
         <description>Larger resource limit for reduce.</description>
     </property>
     <property>
