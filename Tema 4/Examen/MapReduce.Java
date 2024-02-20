@@ -11,7 +11,7 @@ import org.apache.hadoop.mapreduce.lib.output.FileOutputFormat;
 
 public class UserAmountMR 
 {
-	public class UserAmountMapper extends Mapper<LongWritable, Text, Text, DoubleWritable> {
+	public static class UserAmountMapper extends Mapper<LongWritable, Text, Text, DoubleWritable> {
 
 		@Override
 		public void map(LongWritable key, Text value, Context context) throws IOException, InterruptedException {
@@ -19,13 +19,20 @@ public class UserAmountMR
 			String[] fields = line.split(",");
 			if (fields.length >= 9) {
 				String userId = fields[6].trim();
-				double totalAmount = Double.parseDouble(fields[2]);
+        double totalAmount =0;
+        try
+        {
+		       totalAmount = Double.parseDouble(fields[2]);
+        }catch(NumberFormatException ex)
+        {
+
+        }
 				context.write(new Text(userId), new DoubleWritable(totalAmount));
 			}
 		}
 	}
 
-	public class UserAmountReducer extends Reducer<Text, DoubleWritable, Text, DoubleWritable> {
+	public static class UserAmountReducer extends Reducer<Text, DoubleWritable, Text, DoubleWritable> {
 
 		@Override
 		public void reduce(Text key, Iterable<DoubleWritable> values, Context context) throws IOException, InterruptedException {
