@@ -38,7 +38,7 @@ services:
       context: .
       dockerfile: ./Dockerfile
     ports:
-      - "9092:8080"
+      - "9095:8080"
       - "7001:7000"
     depends_on:
       - spark-master
