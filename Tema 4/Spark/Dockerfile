@@ -45,6 +45,4 @@ RUN sed -i 's/\r$//g' /start-spark.sh
 RUN chmod +x /start-spark.sh
 
 
-COPY data/shop_data.csv /opt/spark/
-
 CMD ["/bin/bash", "/start-spark.sh"]
