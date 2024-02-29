@@ -13,6 +13,9 @@ services:
     environment:
       - SPARK_LOCAL_IP=spark-master
       - SPARK_WORKLOAD=master
+    networks:
+      - spark_network
+
   spark-worker-a:
     build:
       context: .
@@ -30,6 +33,8 @@ services:
       - SPARK_EXECUTOR_MEMORY=1G
       - SPARK_WORKLOAD=worker
       - SPARK_LOCAL_IP=spark-worker-a
+    networks:
+      - spark_network
     volumes:
       - ./apps:/opt/spark-apps
       - ./data:/opt/spark-data
@@ -50,6 +55,8 @@ services:
       - SPARK_EXECUTOR_MEMORY=1G
       - SPARK_WORKLOAD=worker
       - SPARK_LOCAL_IP=spark-worker-b
+    networks:
+      - spark_network
     volumes:
       - ./apps:/opt/spark-apps
       - ./data:/opt/spark-data
@@ -60,6 +67,8 @@ services:
       - "5432:5432"
     environment:
       - POSTGRES_PASSWORD=casa1234
+    networks:
+      - spark_network
 
   kafka:
     image: wurstmeister/kafka:latest
@@ -77,9 +86,17 @@ services:
       - /var/run/docker.sock:/var/run/docker.sock
     depends_on:
       - zookeeper
+    networks:
+      - spark_network
 
   zookeeper:
     image: wurstmeister/zookeeper:latest
     container_name: zookeeper
     ports:
       - "2181:2181"
+    networks:
+      - spark_network
+
+networks:
+  spark_network:
+    name: spark_network
