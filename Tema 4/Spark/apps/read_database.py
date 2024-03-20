@@ -9,10 +9,10 @@ def read_from_postgres():
         .getOrCreate()
 
     # Define connection properties
-    jdbc_url = "jdbc:postgresql://spark-database-1:5432/ejemploread"
+    jdbc_url = "jdbc:postgresql://spark-database-1:5432/retail_db"
     connection_properties = {
-        "user": "userbda",
-        "password": "password",
+        "user": "postgres",
+        "password": "casa1234",
         "driver": "org.postgresql.Driver"
     }
 
