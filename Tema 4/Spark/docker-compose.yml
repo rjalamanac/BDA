@@ -87,16 +87,16 @@ services:
     ports:
       - "2181:2181"
 
-  delta-lake:
-    image: deltaio/delta-docker
-    container_name: delta-lake
+  localstack:
+    image: localstack/localstack
     ports:
-      - "8888:8888"
+      - "127.0.0.1:4566:4566" # LocalStack Gateway
+      - "127.0.0.1:4510-4559:4510-4559" # external services port range
+    environment:
+      - DEBUG=${DEBUG:-0}
+    volumes:
+      - "localstackVolume:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
 
-  debian:
-    build:
-      context: .
-      dockerfile: ./docker/debian/Dockerfile
-    container_name: dataSender
-    ports:
-      - "9998:9999"
+volumes:
+  localstackVolume:
