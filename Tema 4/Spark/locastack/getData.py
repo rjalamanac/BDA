@@ -9,7 +9,7 @@ s3 = boto3.client(
 )
 
 # Define the bucket name and object key
-bucket_name = 'sample-bucket'
+bucket_name = 'new-sample-bucket'
 object_key = 'example_data.txt'
 
 # Download the file from S3 bucket
