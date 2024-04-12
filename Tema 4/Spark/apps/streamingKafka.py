@@ -38,6 +38,15 @@ query = df \
     .outputMode("append") \
     .format("console") \
     .start()
+    
+query = df \
+    .writeStream \
+    .outputMode("append") \
+    .format("csv") \
+    .option("path", "/opt/spark-data/borrar") \
+    .option("checkpointLocation", "/opt/spark-data/checkopoint")\
+    .option("header", "true")\
+    .start()
 
 # Wait for the termination of the query
 query.awaitTermination()
