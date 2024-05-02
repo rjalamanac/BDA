@@ -23,6 +23,21 @@ def read_from_postgres():
         # Read data from PostgreSQL table into a DataFrame
         df = spark.read.jdbc(url=jdbc_url, table=table_name, properties=connection_properties)
 
+        #Características de Pokémon:
+        #¿Cuáles son los Pokémon con mayor HP?
+        #¿Qué Pokémon tiene el mayor ataque?
+        #¿Cuáles son las habilidades más comunes entre los Pokémon?
+        '''
+            PokemonName
+            PokemonHP
+            PokemonAtack
+            PokemonHabilities
+            '''
+        df.OrderBy("PokemonAtack").take(1)
+
+        #Numero de pokemons
+        df.count()
+        
         # Show the DataFrame
         df.show()
 

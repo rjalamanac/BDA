@@ -1,0 +1,92 @@
+version: "3.4"
+services:
+  spark-master:
+    build:
+      context: .
+      dockerfile: ./docker/spark/Dockerfile
+    ports:
+      - "9090:8080"
+      - "7077:7077"
+    volumes:
+      - ./apps_bda:/opt/spark-apps
+      - ./data_bda:/opt/spark-data
+    environment:
+      - SPARK_LOCAL_IP=spark-master
+      - SPARK_WORKLOAD=master
+
+  spark-worker-a:
+    build:
+      context: .
+      dockerfile: ./docker/spark/Dockerfile
+    ports:
+      - "9091:8080"
+      - "7000:7000"
+    depends_on:
+      - spark-master
+    environment:
+      - SPARK_MASTER=spark://spark-master:7077
+      - SPARK_WORKER_CORES=1
+      - SPARK_WORKER_MEMORY=1G
+      - SPARK_DRIVER_MEMORY=1G
+      - SPARK_EXECUTOR_MEMORY=1G
+      - SPARK_WORKLOAD=worker
+      - SPARK_LOCAL_IP=spark-worker-a
+    volumes:
+      - ./apps_bda:/opt/spark-apps
+      - ./data_bda:/opt/spark-data
+
+  spark-worker-b:
+    build:
+      context: .
+      dockerfile: ./docker/spark/Dockerfile
+    ports:
+      - "9095:8080"
+      - "7001:7000"
+    depends_on:
+      - spark-master
+    environment:
+      - SPARK_MASTER=spark://spark-master:7077
+      - SPARK_WORKER_CORES=1
+      - SPARK_WORKER_MEMORY=1G
+      - SPARK_DRIVER_MEMORY=1G
+      - SPARK_EXECUTOR_MEMORY=1G
+      - SPARK_WORKLOAD=worker
+      - SPARK_LOCAL_IP=spark-worker-b
+    volumes:
+      - ./apps_bda:/opt/spark-apps
+      - ./data_bda:/opt/spark-data
+
+  database:
+    image: postgres:16.2-alpine
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_PASSWORD=casa1234
+    volumes:
+      - "postgres:/var/lib/postgresql/data"
+
+  localstack:
+    image: localstack/localstack
+    ports:
+      - "127.0.0.1:4566:4566" # LocalStack Gateway
+      - "127.0.0.1:4510-4559:4510-4559" # external services port range
+    environment:
+      - DEBUG=${DEBUG:-0}
+    volumes:
+      - "localstackVolume:/var/lib/localstack"
+      - "/var/run/docker.sock:/var/run/docker.sock"
+
+  mongo:
+    image: mongo
+    environment:
+      - MONGODB_INITDB_ROOT_USERNAME=bda
+      - MONGODB_INITDB_ROOT_PASSWORD=bdaPass
+    ports:
+      - 27017:27017
+    volumes:
+      - mongoVolume:/data/db
+
+volumes:
+  localstackVolume:
+  postgres:
+  mongoVolume:
