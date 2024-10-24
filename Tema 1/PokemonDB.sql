@@ -91,8 +91,16 @@ SELECT * FROM Trainers;
 --Find all Pokémon names.
 SELECT PokemonName FROM Pokemons;
 --Count the number of Pokémon each trainer has.
+SELECT t.TrainerName,Count(p.PokemonID) as numPokemons
+FROM Trainers AS t
+LEFT JOIN Pokemons AS p ON p.TrainerID = t.TrainerID
+GROUP BY  t.TrainerID,t.TrainerName;
 --List all badges with their corresponding trainer names.
+SELECT b.BadgeName, t.TrainerName
+FROM Badges AS b
+LEFT JOIN Trainers AS t ON b.TrainerID = t.TrainerID;
 --Get all abilities.
+SELECT * FROM PokemonAbilities;
 --Find all battles and their winners.
 --Get all Pokémon associated with a specific battle (e.g., BattleID = 1).
 --Retrieve all Pokémon of a specific trainer (e.g., TrainerID = 1).
