@@ -13,8 +13,6 @@ INSERT INTO Trainers (TrainerName,Age) values ("Goku",99);
 CREATE TABLE Pokemons (
     PokemonID INT AUTO_INCREMENT PRIMARY KEY,
     PokemonName VARCHAR(50) NOT NULL,
-    TrainerID INT,
-    FOREIGN KEY (TrainerID) REFERENCES Trainers(TrainerID) ON DELETE SET NULL
 );
 
 INSERT INTO Pokemons (PokemonName,TrainerID) values ("RAICHI",1);
@@ -102,7 +100,11 @@ LEFT JOIN Trainers AS t ON b.TrainerID = t.TrainerID;
 --Get all abilities.
 SELECT * FROM PokemonAbilities;
 --Find all battles and their winners.
+SELECT b.BattleID, b.BattleDate, t.TrainerName
+FROM Battles b
+LEFT JOIN Trainers t on b.WinnerTrainerID=t.TrainerID;
 --Get all Pokémon associated with a specific battle (e.g., BattleID = 1).
+
 --Retrieve all Pokémon of a specific trainer (e.g., TrainerID = 1).
 --List all trainers who have at least one badge.
 --Count the number of battles each trainer has participated in.
