@@ -73,7 +73,7 @@ CREATE TABLE BattlePokemons (
     BattleID INT,
     PokemonID INT,
     TrainerID INT,
-    PRIMARY KEY (BattleID, PokemonID),
+    PRIMARY KEY (BattleID, PokemonID,TrainerID),
     FOREIGN KEY (BattleID) REFERENCES Battles(BattleID) ON DELETE CASCADE,
     FOREIGN KEY (PokemonID) REFERENCES Pokemons(PokemonID) ON DELETE CASCADE,
     FOREIGN KEY (TrainerID) REFERENCES Trainers(TrainerID) ON DELETE CASCADE
@@ -82,16 +82,16 @@ CREATE TABLE BattlePokemons (
 INSERT INTO BattlePokemons (BattleID,PokemonID,TrainerID) values (1,2,1);
 INSERT INTO BattlePokemons (BattleID,PokemonID,TrainerID) values (2,3,2);
 INSERT INTO BattlePokemons (BattleID,PokemonID,TrainerID) values (1,3,3);
-
+INSERT INTO BattlePokemons (BattleID,PokemonID,TrainerID) values (2,2,1);
 
 --Select all trainers.
 SELECT * FROM Trainers;
 --Find all Pokémon names.
 SELECT PokemonName FROM Pokemons;
 --Count the number of Pokémon each trainer has.
-SELECT t.TrainerName,Count(p.PokemonID) as numPokemons
+SELECT t.TrainerName,Count(distinct bp.PokemonID) as numPokemons
 FROM Trainers AS t
-LEFT JOIN Pokemons AS p ON p.TrainerID = t.TrainerID
+LEFT JOIN BattlePokemons AS bp ON t.TrainerID = bp.TrainerID
 GROUP BY  t.TrainerID,t.TrainerName;
 --List all badges with their corresponding trainer names.
 SELECT b.BadgeName, t.TrainerName
