@@ -12,12 +12,12 @@ INSERT INTO Trainers (TrainerName,Age) values ("Goku",99);
 
 CREATE TABLE Pokemons (
     PokemonID INT AUTO_INCREMENT PRIMARY KEY,
-    PokemonName VARCHAR(50) NOT NULL,
+    PokemonName VARCHAR(50) NOT NULL
 );
 
-INSERT INTO Pokemons (PokemonName,TrainerID) values ("RAICHI",1);
-INSERT INTO Pokemons (PokemonName,TrainerID) values ("Jujanchi",1);
-INSERT INTO Pokemons (PokemonName,TrainerID) values ("Raticate",2);
+INSERT INTO Pokemons (PokemonName) values ("RAICHI");
+INSERT INTO Pokemons (PokemonName) values ("Jujanchi");
+INSERT INTO Pokemons (PokemonName) values ("Raticate");
 
 CREATE TABLE Badges (
     BadgeID INT AUTO_INCREMENT PRIMARY KEY,
