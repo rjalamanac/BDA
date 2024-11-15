@@ -1,0 +1,153 @@
+db.authors.insertMany([
+  { 
+    name: "George Orwell",
+    dob: ISODate("1903-06-25"),
+    nationality: "British"
+  },
+  { 
+    name: "Harper Lee",
+    dob: ISODate("1926-04-28"),
+    nationality: "American"
+  }
+]);
+
+
+db.publishers.insertMany([
+  {
+    name: "Secker & Warburg",
+    address: "London, UK",
+    founded: 1935
+  },
+  {
+    name: "J.B. Lippincott & Co.",
+    address: "Philadelphia, USA",
+    founded: 1836
+  }
+]);
+
+
+db.books.insertMany([
+  {
+    title: "1984",
+    genre: "Dystopian",
+    publicationYear: 1949,
+    price: 15.99,
+    rating: 4.7,
+    author: ObjectId('6737922e47c3855baafe6911'), 
+    publisher: ObjectId('6737923747c3855baafe6913') 
+  },
+  {
+    title: "Animal Farm",
+    genre: "Political Satire",
+    publicationYear: 1945,
+    price: 9.99,
+    rating: 4.6,
+    author: ObjectId('6737922e47c3855baafe6912'),  
+    publisher: ObjectId('6737923747c3855baafe6914')
+  },
+  {
+    title: "To Kill a Mockingbird",
+    genre: "Fiction",
+    publicationYear: 1960,
+    price: 10.99,
+    rating: 4.8,
+    author: ObjectId('6737922e47c3855baafe6912'), 
+    publisher: ObjectId('6737923747c3855baafe6913')
+  }	
+]);
+
+
+db.customers.insertMany([
+  { 
+    name: "Alice Johnson",
+    email: "alice@example.com",
+    address: "123 Maple Street, Springfield",
+    reviews: [
+      {
+        rating: 5,
+        text: "A timeless classic!",
+        book: ObjectId('6737929947c3855baafe6915')
+      },
+      {
+        rating: 5,
+        text: "A masterpiece.",
+        book: ObjectId('67338ef6d0ac7c39b0fe6917')
+      }
+    ]
+  },
+  {
+    name: "Bob Smith",
+    email: "bob@example.com",
+    address: "456 Oak Street, Springfield",
+    reviews: [
+      {
+        rating: 4,
+        text: "Thought-provoking.",
+        book: ObjectId('67338ef6d0ac7c39b0fe6915')
+      }
+    ]
+  }
+]);
+
+Enumere todos los libros con una calificación superior a 4,5
+db.books.aggregate(
+    [ { $match : { rating: { $gt: 4.5 } } } ]
+);
+
+Dame el libro con mayor rating
+db.books.aggregate( [{ $sort: { rating: -1 } },{ $limit: 1}] );
+
+Dame todos los libros que tengan como rating, el rating más alto
+db.books.aggregate(
+  [{
+     $addFields: {
+       maxRating: { $max: "$homework" } 
+     }
+   }]
+)
+
+Calcular la puntuación media de cada libro.
+db.customers.aggregate(
+  [
+    {$unwind: "$reviews"},
+    {$group: {_id: "$reviews.book", averageRating: { $avg: "$reviews.rating" } }},
+    {$lookup:
+     {
+       from: "books",
+       localField: "_id",
+       foreignField: "_id",
+       as: "libros"
+     }   
+    },
+    {$unwind: "$libros"},
+    {$project: {libro: "$libros.title", averageRating:1,_id:0}} 
+  ]
+);
+
+
+Encontrar el número total de libros publicados por cada editorial
+db.books.aggregate(
+  [
+    {$group: {_id: "$publisher", numLibros: { $sum: 1 } }},
+    {$lookup:
+     {
+       from: "publishers",
+       localField: "_id",
+       foreignField: "_id",
+       as: "publishers"
+     }   
+    },
+    {$unwind: "$publishers"},
+    {$project: {publisher: "$publishers.name", numLibros:1,_id:0}} 
+  ]
+)
+
+Mostrar el precio medio de los libros de cada género.
+db.books.aggregate(
+  [
+    {$group: {_id: "$genre", averagePrice: { $avg: "$price" },libros: { $push:"$title"} }}
+  ]
+)
+
+Enumerar los autores junto con el número total de reseñas que han recibido sus libros.
+
