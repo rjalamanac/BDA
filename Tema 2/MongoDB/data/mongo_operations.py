@@ -3,11 +3,11 @@ from model.person import Person
 from model.newPerson import NewPerson
 
 class MongoDBOperations:
-    def __init__(self, database_name, collection_name, port,username=None, password=None):
+    def __init__(self, database_name, collection_name, port,username=None, password=None,host="localhost"):
         if username and password:
-            self.client = MongoClient(f'mongodb://{username}:{password}@localhost:{{port}}/')
+            self.client = MongoClient(f'mongodb://{username}:{password}@{host}:{port}/')
         else:
-            self.client = MongoClient(f'mongodb://localhost:{port}/')
+            self.client = MongoClient(f'mongodb://{host}:{port}/')
             
         self.db = self.client[database_name]
         self.collection = self.db[collection_name]

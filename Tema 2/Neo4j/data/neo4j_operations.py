@@ -5,10 +5,6 @@ class Neo4jCRUD:
         self._uri = uri
         self._user = user
         self._password = password
-        self._driver = None
-        self._connect()
-
-    def _connect(self):
         self._driver = GraphDatabase.driver(self._uri, auth=(self._user, self._password))
 
     def close(self):
@@ -17,7 +13,7 @@ class Neo4jCRUD:
 
     def create_node(self, label, properties):
         with self._driver.session() as session:
-            result = session.write_transaction(self._create_node, label, properties)
+            result = session.execute_write(self._create_node, label, properties)
             return result
 
     @staticmethod
@@ -31,7 +27,7 @@ class Neo4jCRUD:
 
     def create_relationship(self,labelOrigin,labelEnd,relationshipName):
          with self._driver.session() as session:
-            result = session.write_transaction(self._create_relationship, labelOrigin,labelEnd,relationshipName)
+            result = session.execute_write(self._create_relationship, labelOrigin,labelEnd,relationshipName)
             return result
         
     @staticmethod
@@ -46,7 +42,7 @@ class Neo4jCRUD:
     
     def read_nodes(self, label):
         with self._driver.session() as session:
-            result = session.read_transaction(self._read_nodes, label)
+            result = session.execute_write(self._read_nodes, label)
             return result
 
     @staticmethod
@@ -60,7 +56,7 @@ class Neo4jCRUD:
     
     def update_node(self, node_id, properties):
         with self._driver.session() as session:
-            result = session.write_transaction(self._update_node, node_id, properties)
+            result = session.execute_write(self._update_node, node_id, properties)
             return result
 
     @staticmethod
@@ -76,7 +72,7 @@ class Neo4jCRUD:
 
     def remove_node(self, node_id):
         with self._driver.session() as session:
-            session.write_transaction(self._remove_node, node_id)
+            session.execute_write(self._remove_node, node_id)
 
     @staticmethod
     def _remove_node(tx, node_id):

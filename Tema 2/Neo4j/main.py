@@ -4,7 +4,7 @@ from data.neo4j_operations import Neo4jCRUD
 def main():
     uri = "bolt://localhost:7687"  
     user = "neo4j"
-    password = "password"
+    password = "my-secret-pw"
 
     neo4j_crud = Neo4jCRUD(uri, user, password)
 
