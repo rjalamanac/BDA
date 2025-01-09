@@ -1,66 +1,105 @@
-version: "3"
+version: "3.9"
 
 services:
   namenode:
     build: ./Namenode
-    hostname: 10.2.14.251
     container_name: namenode
-    volumes:
-      - hadoop_namenode:/hadoop/dfs/name
-      - ./data/:/hadoop-data/input
-      - ./map_reduce/:/hadoop-data/map_reduce
+    hostname: namenode
     environment:
       - CLUSTER_NAME=test
     ports:
-      - "9870:9870"
-      - "8020:8020"
+      - "9870:9870" # Web UI
+      - "8020:8020" # IPC
+    volumes:
+      - hadoop_namenode:/hadoop/dfs/name
+      - ./data:/hadoop-data/input
+      - ./map_reduce:/hadoop-data/map_reduce
     networks:
-      - hadoop_network
+      hadoop_network:
+        aliases:
+          - namenode
+
+  datanode:
+    build: ./Datanode
+    container_name: datanode
+    hostname: datanode
+    depends_on:
+      - namenode
+    ports:
+      - "9864:9864" # DataNode Web UI
+    volumes:
+      - hadoop_datanode:/hadoop/dfs/data
+    networks:
+      hadoop_network:
+        aliases:
+          - datanode
 
   resourcemanager:
     build: ./Resourcemanager
     container_name: resourcemanager
     hostname: resourcemanager
-    restart: on-failure
     depends_on:
       - namenode
-      - datanode1
     ports:
-      - "8089:8088"
+      - "8088:8088" # ResourceManager Web UI
     networks:
-      - hadoop_network
+      hadoop_network:
+        aliases:
+          - resourcemanager
 
-  nodemanager1:
+  nodemanager:
     build: ./Nodemanager
-    hostname: nodemanager1
-    container_name: nodemanager1
+    container_name: nodemanager
+    hostname: nodemanager
+    depends_on:
+      - resourcemanager
+      - datanode
+    ports:
+      - "8042:8042" # NodeManager Web UI
+    networks:
+      hadoop_network:
+        aliases:
+          - nodemanager
+
+  historyserver:
+    build: ./HistoryServer
+    container_name: historyserver
+    hostname: historyserver
     depends_on:
       - namenode
-      - datanode1
     ports:
-      - "8042:8042"
+      - "8188:8188" # HistoryServer Web UI
     networks:
-      - hadoop_network
+      hadoop_network:
+        aliases:
+          - historyserver
 
+  zookeeper:
+    image: zookeeper:3.8
+    container_name: zookeeper
+    hostname: zookeeper
+    ports:
+      - "2181:2181" # Zookeeper client port
+    networks:
+      hadoop_network:
+        aliases:
+          - zookeeper
 
-  datanode1:
-    build: ./Datanode
-    hostname: 10.2.14.251
+  journalnode:
+    build: ./JournalNode
+    container_name: journalnode
+    hostname: journalnode
     depends_on:
-      - namenode
-    ports:
-      - "9864:9864"
-    volumes:
-      - hadoop_datanode1:/hadoop/dfs/data
+      - zookeeper
     networks:
-      - hadoop_network
-
+      hadoop_network:
+        aliases:
+          - journalnode
 
 volumes:
   hadoop_namenode:
-  hadoop_datanode1:
+  hadoop_datanode:
 
 
 networks:
   hadoop_network:
-    name: hadoop_network
