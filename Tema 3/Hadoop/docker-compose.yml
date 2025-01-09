@@ -61,41 +61,6 @@ services:
         aliases:
           - nodemanager
 
-  historyserver:
-    build: ./HistoryServer
-    container_name: historyserver
-    hostname: historyserver
-    depends_on:
-      - namenode
-    ports:
-      - "8188:8188" # HistoryServer Web UI
-    networks:
-      hadoop_network:
-        aliases:
-          - historyserver
-
-  zookeeper:
-    image: zookeeper:3.8
-    container_name: zookeeper
-    hostname: zookeeper
-    ports:
-      - "2181:2181" # Zookeeper client port
-    networks:
-      hadoop_network:
-        aliases:
-          - zookeeper
-
-  journalnode:
-    build: ./JournalNode
-    container_name: journalnode
-    hostname: journalnode
-    depends_on:
-      - zookeeper
-    networks:
-      hadoop_network:
-        aliases:
-          - journalnode
-
 volumes:
   hadoop_namenode:
   hadoop_datanode:
