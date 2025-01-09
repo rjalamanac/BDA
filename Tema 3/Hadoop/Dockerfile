@@ -7,7 +7,7 @@ USER root
 # --------------------------------------------------------
 RUN apt-get update 
 RUN apt-get install -y --no-install-recommends openjdk-11-jdk
-RUN apt install curl
+RUN apt-get -y install curl
 # For AMD based architecture use
 # ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk/
 ENV JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64/
