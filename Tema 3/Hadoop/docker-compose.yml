@@ -55,7 +55,7 @@ services:
       - resourcemanager
       - datanode
     ports:
-      - "8042:8042" # NodeManager Web UI
+      - "8043:8043" # NodeManager Web UI
     networks:
       hadoop_network:
         aliases:
