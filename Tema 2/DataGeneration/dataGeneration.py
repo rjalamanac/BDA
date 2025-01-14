@@ -23,10 +23,10 @@ def generate_neo4j_data():
     # works_at.csv
     with open('Tema 2/DataGeneration/works_at.csv', mode='w', newline='') as file:
         writer = csv.writer(file)
-        writer.writerow(['rol', 'location_id'])
+        writer.writerow(['person_id','rol', 'location_id'])
         roles = ['Engineer', 'Manager', 'Analyst', 'Developer']
         for i in range(1, 101):
-            writer.writerow([random.choice(roles), random.randint(1, 20)])
+            writer.writerow([random.randint(20, 30),random.choice(roles), random.randint(1, 20)])
 
 # Generate JSON files for MySQL data
 def generate_mysql_data():
