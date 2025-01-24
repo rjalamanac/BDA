@@ -2,7 +2,7 @@ import csv
 import os
 from pywebhdfs.webhdfs import PyWebHdfsClient
 from pprint import pprint
-hdfs = PyWebHdfsClient(host='10.2.14.251',port='9870', user_name='root')
+hdfs = PyWebHdfsClient(host='localhost',port='9870', user_name='root')
 content=""
 with open("Tema 3/Hadoop/data/train.csv", 'r') as file:
             content = file.read()
