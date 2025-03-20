@@ -1,6 +1,7 @@
 # Stage 1: Builder
 FROM openjdk:11.0.11-jre-slim-buster as builder
 
+<<<<<<< HEAD
 # Install necessary packages
 RUN apt-get update && apt-get install -y --no-install-recommends \
     curl vim wget software-properties-common ssh net-tools ca-certificates python3-setuptools \
@@ -8,12 +9,21 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     rm -rf /var/lib/apt/lists/* 
 
 # Ensure python points to python3
+=======
+# Add Dependencies for PySpark
+RUN apt-get update && apt-get install -y curl vim wget software-properties-common ssh net-tools ca-certificates python3 python3-pip python3-numpy python3-matplotlib python3-scipy python3-pandas python3-simpy
+>>>>>>> 78168f0d446676144ce0781b80a7475894bd46c1
 RUN update-alternatives --install "/usr/bin/python" "python" "$(which python3)" 1
 
 # Install PySpark
 RUN pip3 install pyspark
+<<<<<<< HEAD
 
 # Set environment variables
+=======
+# Fix the value of PYTHONHASHSEED
+# Note: this is needed when you use Python 3.3 or greater
+>>>>>>> 78168f0d446676144ce0781b80a7475894bd46c1
 ENV SPARK_VERSION=3.5.5 \
     HADOOP_VERSION=3 \
     SPARK_HOME=/opt/spark \
