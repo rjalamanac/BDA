@@ -1,7 +1,3 @@
-<<<<<<< HEAD
-=======
-
->>>>>>> 78168f0d446676144ce0781b80a7475894bd46c1
 services:
   spark-master:
     build:
@@ -50,7 +46,6 @@ services:
       - SPARK_DRIVER_MEMORY=1G
       - SPARK_EXECUTOR_MEMORY=1G
       - SPARK_WORKLOAD=worker
-<<<<<<< HEAD
       - SPARK_LOCAL_IP=spark-worker-a
       - SPARK_NO_DAEMONIZE=true
     healthcheck:
@@ -58,12 +53,6 @@ services:
       interval: 10s
       timeout: 5s
       retries: 3
-=======
-      - SPARK_LOCAL_IP=spark-worker-a      
-    volumes:
-      - ./apps:/opt/spark-apps
-      - ./data:/opt/spark-data
->>>>>>> 78168f0d446676144ce0781b80a7475894bd46c1
 
   spark-worker-b:
     build:
@@ -122,7 +111,6 @@ services:
       - POSTGRES_DB=retail_db
     volumes:
       - postgres:/var/lib/postgresql/data
-
 
   kafka:
     image: wurstmeister/kafka:latest
