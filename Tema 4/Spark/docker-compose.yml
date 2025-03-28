@@ -113,6 +113,7 @@ services:
       - postgres:/var/lib/postgresql/data
 
   kafka:
+    #update apache/kafka
     image: wurstmeister/kafka:latest
     container_name: kafka
     hostname: kafka

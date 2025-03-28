@@ -8,7 +8,7 @@ aws_secret_access_key = 'test'
 
 spark = SparkSession.builder \
     .appName("SPARK S3") \
-    .config("spark.hadoop.fs.s3a.endpoint", "http://spark-localstack-1:4566") \
+    .config("spark.hadoop.fs.s3a.endpoint", "http://localstack:4566") \
     .config("spark.hadoop.fs.s3a.access.key", aws_access_key_id) \
     .config("spark.hadoop.fs.s3a.secret.key", aws_secret_access_key) \
     .config("spark.sql.shuffle.partitions", "4") \
@@ -20,9 +20,10 @@ spark = SparkSession.builder \
     .master("spark://spark-master:7077") \
     .getOrCreate()
 
-
+#Upload file to S3
 try:
-    df3 = spark.read.option("delimiter", ",").option("header", True).csv("/opt/spark-data/shop_data.csv")
+    #Read file from local directory
+    df3 = spark.read.option("delimiter", ",").option("header", True).csv("/opt/spark-data/users.csv")
     
     df3 \
     .write \
@@ -30,7 +31,7 @@ try:
     .option('fs.s3a.committer.staging.conflict-mode', 'replace') \
     .option("fs.s3a.fast.upload.buffer", "bytebuffer")\
     .mode('overwrite') \
-    .csv(path='s3a://new-sample-bucket/output', sep=',')
+    .csv(path='s3a://bucket-bda/output', sep=',')
     
     spark.stop()
     
